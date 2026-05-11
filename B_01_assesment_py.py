@@ -93,11 +93,12 @@ while num_questions <= 0:
 score = 0
 history = []
 
+
 # Quiz loop
 for i in range(num_questions):
 
     question, correct = generate_question()
-    print(f"\nQuestion {i + 1}: {question}")
+    print(f"\nQuestion {i+1}: {question}")
 
     user_answer = get_integer("Your answer: ")
 
