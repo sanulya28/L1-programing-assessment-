@@ -118,18 +118,19 @@ for i in range(num_questions):
         "result": result
     })
 
-    # Final results
-    percentage = (score / num_questions) * 100
-    print(f"\nFinal Score: {percentage:.1f}%")
+# Final results
+percentage = (score / num_questions) * 100
+print(f"\nFinal Score: {percentage:.1f}%")
 
-    # Show history
-    if yes_no("Do you want to see your history? ") == "yes":
-        for i, item in enumerate(history, 1):
+# Show history
+if yes_no("Do you want to see your history? ") == "yes":
+    for i, item in enumerate(history, 1):
             print(f"\nQuestion {i}: {item['question']}")
             print(f"Correct answer: {item['correct']}")
 
             if item["result"]:
                 print("Correct ✅")
+                print("Good Job!!🎉")
             else:
                 print(f"Your answer: {item['user']} ❌")
-
+                print("Try Again")

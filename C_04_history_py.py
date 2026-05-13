@@ -18,7 +18,7 @@ def yes_no(question):
 
 # Show history
 if yes_no("Do you want to see your history? ") == "yes":
-        for i, item in enumerate(history, 1):
+    for i, item in enumerate(history, 1):
             print(f"\nQuestion {i}: {item['question']}")
             print(f"Correct answer: {item['correct']}")
 
