@@ -1,3 +1,5 @@
+import random
+
 def yes_no(question):
 
     """Checks user response to a question is yes / no (y/n), returns 'yes' or 'no'"""
@@ -36,8 +38,7 @@ def instructions():
 
 # Main routine
 print()
-print("\n➕➕➕Welcome to the addition and subtraction Quiz➖➖➖/n")
-print()
+print("\n➕➕➕ Welcome to the Addition and Subtraction Quiz ➖➖➖\n")
 
 # Ask if user wants instruction
 
@@ -49,43 +50,41 @@ if want_instructions == "yes":
 
 print("program continues...")
 
-import random
-
 MAX_NUMBER = 20
 
-def get_integer( question):
+def get_integer(question):
     """Gets a valid integer from the user."""
 
     while True:
         try:
             return int(input(question))
-        except:
+        except ValueError:
            print("please enter a valid number.")
 
 
 def generate_question():
-    """Generate a random addition and subtraction question."""
+        """Generate a random addition and subtraction question."""
 
-    num1 = random.randint(1, MAX_NUMBER)
-    num2 = random.randint(1, MAX_NUMBER)
-    operator = random.choice(["+", "-"])
+        num1 = random.randint(1, MAX_NUMBER)
+        num2 = random.randint(1, MAX_NUMBER)
+        operator = random.choice(["+", "-"])
 
-    # prevent negative answers
-    if operator == "-" and num2 > num1:
-     num1,num2 = num2,num1
+        # prevent negative answers
+        if operator == "-" and num2 > num1:
+            num1, num2 = num2, num1
 
-    if operator == "+":
-     answer = num1 + num2
-    else:
-     answer = num1 - num2
+        if operator == "+":
+            answer = num1 + num2
+        else:
+            answer = num1 - num2
 
-    question = f"{num1} {operator} {num2}"
-    return question, answer
+        question = f"{num1} {operator} {num2}"
+        return question, answer
 
 num_questions = get_integer("How many questions do you want? ")
 
-while num_questions <= 0:
-    print("Please enter a number greater than 0.")
+while num_questions <= 0 or num_questions > 20:
+    print("Please enter a number between 1 and 20.")
     num_questions = get_integer("How many questions do you want? ")
 
 # setup variables
@@ -94,11 +93,12 @@ score = 0
 history = []
 
 
-# Quiz loop
-for i in range(num_questions):
+for item in range(num_questions):
 
     question, correct = generate_question()
-    print(f"\nQuestion {i+1}: {question}")
+
+    print(f"\nQuestion {item + 1} of {num_questions}")
+    print(question)
 
     user_answer = get_integer("Your answer: ")
 
@@ -110,27 +110,22 @@ for i in range(num_questions):
         print(f"Wrong! Correct answer: {correct}")
         result = False
 
-    # store history
-    history.append({
-        "question": question,
-        "correct": correct,
-        "user": user_answer,
-        "result": result
-    })
 
-# Final results
-percentage = (score / num_questions) * 100
-print(f"\nFinal Score: {percentage:.1f}%")
-
-# Show history
+# quiz history
 if yes_no("Do you want to see your history? ") == "yes":
-    for i, item in enumerate(history, 1):
-            print(f"\nQuestion {i}: {item['question']}")
-            print(f"Correct answer: {item['correct']}")
+    percentage = (score / num_questions) * 100
+    print(f"You got {score} out of {num_questions} correct.")
+    print(f"\nFinal Score: {percentage:.1f}%")
 
-            if item["result"]:
+
+print("\n📜 Quiz History 📜")
+for i, item in enumerate(history, 1):
+         print(f"\nQuestion {item}: {item['question']}")
+         print(f"Correct answer: {item['correct']}")
+
+         if item["result"]:
                 print("Correct ✅")
                 print("Good Job!!🎉")
-            else:
+         else:
                 print(f"Your answer: {item['user']} ❌")
-                print("Try Again")
+                print("Better luck next time😢")
